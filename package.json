@@ -2,6 +2,9 @@
   "name": "branching-semantic",
   "module": "index.ts",
   "type": "module",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "exports": {
     "./sum": {
       "types": "./dist/sum/index.d.ts",
