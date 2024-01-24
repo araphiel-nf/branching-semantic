@@ -7,31 +7,31 @@ on:
         description: 'Deploy environment'
         type: environment
         required: true
-      tag:
-        description: 'Tag to deploy (e.g., v1.0.0)'
-        type: string
-        required: true
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: 
-      name: ${{ github.event.inputs.environment }}
     steps:
       - name: Checkout ${{ github.event.inputs.tag }}
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.tag }}
 
-      - name: Deploying to ${{ github.event.inputs.environment }}
-        run: echo "Deploy to AppCenter"
+      - name: Get Tag
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
 
   wait_for_approval:
-    name: Wait for manual testing approval
+    name: Wait for manual approval
     needs: deploy
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
+    environment: 
+      name: ${{ github.event.inputs.environment }}
     steps:
       - name: Wait for approval
         run: echo "Deployment approved"
+
+      - name: Deploy ${{ needs.deploy.outputs.version }} to ${{ github.event.inputs.environment }}
+        run: echo "Deploy"
