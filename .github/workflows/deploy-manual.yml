@@ -1,4 +1,4 @@
-name: Manual Deploy
+name: Tagged Deploy
 
 on:
   workflow_dispatch:
