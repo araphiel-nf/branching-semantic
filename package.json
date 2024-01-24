@@ -1,0 +1,25 @@
+{
+  "name": "branching-semantic",
+  "module": "index.ts",
+  "type": "module",
+  "exports": {
+    "./sum": {
+      "types": "./dist/sum/index.d.ts",
+      "default": "./dist/sum/index.js"
+    }
+  },
+  "scripts": {
+    "build": "bun run build:types && bun run build:bun",
+    "build:bun": "bun build ./src/**/index.ts --outdir ./dist --root src",
+    "build:types": "tsc",
+    "test": "bun test",
+    "clean": "git clean -ffxd",
+    "semantic-release": "semantic-release"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "bun": "^1.0.25",
+    "semantic-release": "^23.0.0",
+    "typescript": "^5.0.0"
+  }
+}
