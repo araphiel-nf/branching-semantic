@@ -8,6 +8,23 @@
       "default": "./dist/sum/index.js"
     }
   },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false,
+          "verifyConditions": false
+        }
+      ]
+    ]
+  },
   "scripts": {
     "build": "bun run build:types && bun run build:bun",
     "build:bun": "bun build ./src/**/index.ts --outdir ./dist --root src",
@@ -20,6 +37,8 @@
   "devDependencies": {
     "@commitlint/cli": "^18.5.0",
     "@commitlint/config-conventional": "^18.5.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "@types/bun": "latest",
     "bun": "^1.0.25",
     "lefthook": "^1.6.0",
