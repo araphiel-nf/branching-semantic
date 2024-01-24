@@ -14,11 +14,15 @@
     "build:types": "tsc",
     "test": "bun test",
     "clean": "git clean -ffxd",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "postinstall": "lefthook uninstall && lefthook install"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.5.0",
+    "@commitlint/config-conventional": "^18.5.0",
     "@types/bun": "latest",
     "bun": "^1.0.25",
+    "lefthook": "^1.6.0",
     "semantic-release": "^23.0.0",
     "typescript": "^5.0.0"
   }

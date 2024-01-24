@@ -1,0 +1,7 @@
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+
+pre-commit:
+  parallel: true
+  commands:
+    commit-msg:
+      run: bun x commitlint --extends @commitlint/config-conventional --edit $1
