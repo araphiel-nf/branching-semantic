@@ -1,0 +1,35 @@
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deploy environment'
+        type: environment
+        required: true
+      tag:
+        description: 'Tag to deploy (e.g., v1.0.0)'
+        type: string
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ github.event.inputs.environment }}
+    steps:
+      - name: Checkout ${{ github.event.inputs.tag }}
+        uses: actions/checkout@v4
+
+      - name: Deploying to ${{ github.event.inputs.environment }}
+        run: echo "Deploy to AppCenter"
+
+  wait_for_approval:
+    name: Wait for manual testing approval
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Wait for approval
+        run: echo "Deployment approved"
