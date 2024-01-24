@@ -15,10 +15,10 @@ jobs:
     steps:
       - name: Check environment
         run: |
-        if [[ "${{ github.event.inputs.environment }}" == "prod" ]]; then
-          echo "Cannot run this job with 'prod' environment"
-          exit 1
-        fi
+          if [[ "${{ github.event.inputs.environment }}" == "prod" ]]; then
+            echo "Cannot run this job with 'prod' environment"
+            exit 1
+          fi
       
       - name: Checkout
         uses: actions/checkout@v4
