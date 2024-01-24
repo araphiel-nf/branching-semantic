@@ -13,12 +13,19 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout ${{ github.event.inputs.tag }}
+      - name: Check environment
+        run: |
+        if [[ "${{ github.event.inputs.environment }}" == "prod" ]]; then
+          echo "Cannot run this job with 'prod' environment"
+          exit 1
+        fi
+      
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Get Tag
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
